@@ -15,6 +15,15 @@ export class TasksObjectsService {
       desc: 'Priorizar exercícios 3.1-3.5', 
       status: 'todo' 
     },
+  
+    { 
+      id: uid(), 
+      title: 'começar projeto Typescript', 
+      due: addDaysISO(2), 
+      level: 'high', 
+      desc: 'utilizar Angular', 
+      status: 'todo' 
+    },
 
     { 
       id: uid(), 
@@ -36,8 +45,8 @@ export class TasksObjectsService {
   constructor() { };
 
   loadtasks() {
-    return this.TasksSignal;
+    return this.TasksSignal();
   }
 
-  //TODO: métodos a mais para as tasks, EX: adicionarTask, removerTask, etc.
+  //TODO: adicionar métodos para adicionar, remover e editar tasks.
 }
