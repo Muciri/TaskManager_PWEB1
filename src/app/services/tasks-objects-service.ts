@@ -48,22 +48,21 @@ export class TasksObjectsService {
     return this.TasksSignal();
   }
 
-     add(task: Omit<Task, 'id'>) {
+  add(task: Omit<Task, 'id'>) {
     this.TasksSignal.update(tasks => [{ id: uid(), ...task }, ...tasks]);
   }
+
   remove(id: string) {
-  this.TasksSignal.update(tasks => tasks.filter(t => t.id !== id));
-}
+    this.TasksSignal.update(tasks => tasks.filter(t => t.id !== id));
+  }
 
-edit(id: string, data: Partial<Task>) {
-  this.TasksSignal.update(tasks =>
-    tasks.map(t => (t.id === id ? { ...t, ...data } : t))
-  );
-}
-
+  edit(id: string, data: Partial<Task>) {
+    this.TasksSignal.update(tasks =>
+      tasks.map(t => (t.id === id ? { ...t, ...data } : t))
+    );
+  }
 
   tasksSignal() {
     return this.TasksSignal;
   }
-  //TODO: adicionar métodos para adicionar, remover e editar tasks.
 }

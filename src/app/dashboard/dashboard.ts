@@ -14,7 +14,7 @@ export class Dashboard {
   private tasksSvc = inject(TasksObjectsService);
 
   // torne públicos para o template
-  tasksSig = this.tasksSvc.tasksSignal(); // <= certifique-se de que este método existe no service
+  tasksSig = this.tasksSvc.tasksSignal(); 
 
   tasksTodo  = computed(() => this.tasksSig().filter(t => t.status === 'todo'));
   tasksDoing = computed(() => this.tasksSig().filter(t => t.status === 'doing'));
@@ -25,7 +25,6 @@ export class Dashboard {
   @Output() editTask = new EventEmitter<Task>();
   @Output() removeTask = new EventEmitter<string>();
 
- 
   onEdit(_task: Task) {
     this.editTask.emit(_task);
   }

@@ -28,7 +28,7 @@ export class App {
   open()  { this.showModal = true; }
   close() { this.showModal = false; this.resetForm(); }
 
-   save() {
+  save() {
     if (!this.title || !this.due) return;
 
     const data = {
@@ -50,22 +50,22 @@ export class App {
     this.close();
   }
 
-  /** Recebe evento de edição vindo do Dashboard */
- onEditTask(payload: unknown) {
-  const task = payload as Task; // confere se precisar
-  this.editingTaskId = task.id;
-  this.title = task.title;
-  this.due = task.due;
-  this.level = task.level;
-  this.desc = task.desc;
-  this.status = task.status;
-  this.showModal = true;
-}
+ //Recebe evento de edição vindo do Dashboard
+  onEditTask(payload: unknown) {
+    const task = payload as Task; 
+    this.editingTaskId = task.id;
+    this.title = task.title;
+    this.due = task.due;
+    this.level = task.level;
+    this.desc = task.desc;
+    this.status = task.status;
+    this.showModal = true;
+  }
 
-onRemoveTask(payload: unknown) {
-  const id = payload as string;
-  this.tasksSvc.remove(id);
-}
+  onRemoveTask(payload: unknown) {
+    const id = payload as string;
+    this.tasksSvc.remove(id);
+  }
 
   private resetForm() {
     this.editingTaskId = null;
