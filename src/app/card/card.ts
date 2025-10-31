@@ -1,15 +1,18 @@
-import { Component, Input } from '@angular/core';
-
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Task } from '../types/Task';
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [],
-  templateUrl: './card.html'
+  imports: [CommonModule],
+  templateUrl: './card.html',
 })
 export class Card {
-  @Input() task: Task | undefined; // aqui tem que colocar o '| Undefided' para não ter erro de compilação quando o APP ainda não renderizou a task
+  // Valor padrão evita "possibly undefined" no template
+  @Input() task: Task = { id: '', title: '', due: '', level: 'low', desc: '', status: 'todo' };
 
-  //TODO: adicionar métodos para editar e excluir a Task, acioná-los quando apertar os botões
+  // Saídas usadas no template/parent (Dashboard)
+  @Output() edit = new EventEmitter<Task>();
+  @Output() remove = new EventEmitter<string>();
 }

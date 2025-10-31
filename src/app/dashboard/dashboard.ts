@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { TasksObjectsService } from '../services/tasks-objects-service';
 import { Card } from '../card/card';
+import { Task } from '../types/Task';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,10 +11,26 @@ import { Card } from '../card/card';
   templateUrl: './dashboard.html',
 })
 export class Dashboard {
-  protected tasksService:TasksObjectsService = inject(TasksObjectsService);
+  private tasksSvc = inject(TasksObjectsService);
 
-  //separando tasks por status
-  protected tasksTodo = this.tasksService.loadtasks().filter( task => task.status === 'todo' );
-  protected tasksDoing = this.tasksService.loadtasks().filter( task => task.status === 'doing' );
-  protected tasksDone = this.tasksService.loadtasks().filter( task => task.status === 'done' );
+  // torne públicos para o template
+  tasksSig = this.tasksSvc.tasksSignal(); // <= certifique-se de que este método existe no service
+
+  tasksTodo  = computed(() => this.tasksSig().filter(t => t.status === 'todo'));
+  tasksDoing = computed(() => this.tasksSig().filter(t => t.status === 'doing'));
+  tasksDone  = computed(() => this.tasksSig().filter(t => t.status === 'done'));
+
+  trackById = (_: number, t: Task) => t.id;
+
+  @Output() editTask = new EventEmitter<Task>();
+  @Output() removeTask = new EventEmitter<string>();
+
+ 
+  onEdit(_task: Task) {
+    this.editTask.emit(_task);
+  }
+
+  onRemove(_id: string) {
+    this.removeTask.emit(_id);
+  }
 }

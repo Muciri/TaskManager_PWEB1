@@ -1,31 +1,42 @@
-<main>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    <div>
-        <h2 class="font-semibold mb-2">Para fazer</h2>
-        <div id="col-todo" class="space-y-3 min-h-[200px] p-3 bg-white rounded shadow-sm" data-status="todo">
-            <app-card
-                *ngFor="let item of tasksTodo"
-                [task]="item">
-            </app-card>            
-        </div>
-    </div>
-    <div>
-        <h2 class="font-semibold mb-2">Em andamento</h2>
-        <div id="col-doing" class="space-y-3 min-h-[200px] p-3 bg-white rounded shadow-sm" data-status="doing">
-            <app-card
-                *ngFor="let item of tasksDoing"
-                [task]="item">
-            </app-card>   
-        </div>
-    </div>
-    <div>
-        <h2 class="font-semibold mb-2">Concluídas</h2>
-        <div id="col-done" class="space-y-3 min-h-[200px] p-3 bg-white rounded shadow-sm" data-status="done">
-            <app-card
-                *ngFor="let item of tasksDone"
-                [task]="item">
-            </app-card>   
-        </div>
-    </div>
-    </div>
+<main class="mt-6">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <section>
+      <h2 class="font-semibold mb-2">Para fazer</h2>
+      <div class="space-y-3 p-3 bg-white rounded-xl shadow-sm border border-slate-200">
+        <app-card
+          *ngFor="let item of tasksTodo(); trackBy: trackById"
+          [task]="item"
+          (edit)="onEdit($event)"
+          (remove)="onRemove($event)"
+        ></app-card>
+        <p *ngIf="tasksTodo().length === 0" class="text-sm text-slate-500">Sem tarefas aqui.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="font-semibold mb-2">Em andamento</h2>
+      <div class="space-y-3 p-3 bg-white rounded-xl shadow-sm border border-slate-200">
+        <app-card
+          *ngFor="let item of tasksDoing(); trackBy: trackById"
+          [task]="item"
+          (edit)="onEdit($event)"
+          (remove)="onRemove($event)"
+        ></app-card>
+        <p *ngIf="tasksDoing().length === 0" class="text-sm text-slate-500">Sem tarefas aqui.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="font-semibold mb-2">Concluídas</h2>
+      <div class="space-y-3 p-3 bg-white rounded-xl shadow-sm border border-slate-200">
+        <app-card
+          *ngFor="let item of tasksDone(); trackBy: trackById"
+          [task]="item"
+          (edit)="onEdit($event)"
+          (remove)="onRemove($event)"
+        ></app-card>
+        <p *ngIf="tasksDone().length === 0" class="text-sm text-slate-500">Sem tarefas aqui.</p>
+      </div>
+    </section>
+  </div>
 </main>
